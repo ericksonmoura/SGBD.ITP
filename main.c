@@ -2,37 +2,52 @@
 #include <stdlib.h>
 #include <locale.h>
 #include <windows.h>
+
+void addTupla(){
+    /*char table[21];
+
+    printf("Nome da tabela: ");
+    fgets(table,21,stdin);
+    fflush(stdin);
+    table[strlen(table)-1]='\0';
+    system("cls");*/
+
+
+
+
+
+}
+
+
 void menu(){
     int n;
 
-        system("cls"); // apaga tudo que ja foi escrito
-        printf("\t\t\t\t\t\tITP 2018.2\t\t\t\t\t\n");
-    printf("\t\t\t\t\tBanco de dados relacional em C\t\t\t\t\t\n");
-    printf("\t\t\t###############################################################\n \t\t\t###############################################################\n \t\t\t###############################################################\n");
-    printf("\n");
-    printf("\t\t\t\t\tMenu do SGBD: \n");
-    printf("\t\t\t\t\t(1). Criar tabela \n");
-    printf("\t\t\t\t\t(2). Listar todas as tabelas \n");
-    printf("\t\t\t\t\t(3). Criar uma nova linha na tabela \n");
-    printf("\t\t\t\t\t(4). Listar todos os dados de uma tabela \n");
-    printf("\t\t\t\t\t(5). Pesquisar valor em uma tabela \n");
-    printf("\t\t\t\t\t(6). Apagar valor de uma tabela \n");
-    printf("\t\t\t\t\t(7). Apagar uma tabela \n");
-    printf("\n");
-    printf("\t\t\t###############################################################\n \t\t\t###############################################################\n \t\t\t###############################################################\n");
+        system("cls");
+        printf("  *******************************\n");
+        printf(" *         SGBD-ITP            *\n");
+        printf("*******************************\n");
+        printf("\n");
+        printf("Escolha uma opção:\n");
+        printf("(1)Criar um tabela\n");
+        printf("(2)Listar todas as tabelas\n");
+        printf("(3)Criar uma nova linha na tabela\n");
+        printf("(4)Listar todos os dados de uma tabela\n");
         scanf("%d",&n);
-        fflush(stdin); // 'Limpa' o buffer
+        fflush(stdin);
         switch(n){
             case 1:
-                novaTabela();
+                system("cls");
+                novaTable();
             break;
-            /*case 2:
-                showTable();
+            case 2:
+                system("cls");
+
                 break;
             case 3:
-                showTables();
+                system("cls");
+                addTupla();
                 break;
-            case 4:
+           /* case 4:
                 deleteTable();
                 break;
             case 0:
@@ -50,14 +65,11 @@ void tituloEidioma(){
 }
 
 
-void novaTabela(){
+void novaTable(){
     char *ponteiro;
     char tabela[30];
     char key[30];
-    int num_colunas;
-    char nome_coluna[30];
-    char tipo_coluna[10];
-    int cont, aux_tipo = 0;
+    int n;
 
     printf(" Nome: ");
     fgets(tabela,30,stdin);
@@ -67,10 +79,9 @@ void novaTabela(){
     system("cls");
 
     printf("quantas colunas: ");
-    scanf("%d",&num_colunas);
+    scanf("%d",&n);
     fflush(stdin);
     system("cls");
-    }
 
     tabela[strlen(tabela)/sizeof(char) -1]= '\0';
     key[strlen(key)/sizeof(char) -1]= '\0';
@@ -91,10 +102,10 @@ void novaTabela(){
 
     fprintf(metaDados,"%s",buffer);
 
-char tipoVariavel(){
+
 
         int x;
-        char tipo[5];
+        char tipo[2];
         char nome[30];
         system("cls");
         printf("Escolha o tipo de dado:\n");
@@ -108,7 +119,6 @@ char tipoVariavel(){
 
         switch(x){
         case 1 :
-            std
             tipo [0]= 'I';
             tipo [1]= '\0';
             break;
@@ -146,32 +156,96 @@ char tipoVariavel(){
 
 
 
-    fprintf(metaDados,"%s","}\n");
-    fclose(metaDados);
+        fprintf(metaDados,"%s","}\n\n");
+        fclose(metaDados);
+
+
+        //criando o .txt para a tabela
+        strcat(tabela,".txt");
+        FILE * tab = fopen(tabela,"w");
+        if(tab!=NULL){
+            fprintf(tab,tabela);
+        }else{
+            printf("ERROR");
+        }
+
+        fclose(tab);
+
+
 
 }
 
+void showTables (char **vetor){
+    FILE *arq;
+    arq = fopen("meta.txt","r");
+    int i=0,quantTables,aux=0, p=0,k=0;
+    char caracter, arquivo[1000];
 
-void showTables(){
+     if(arq!=NULL){
+        while((caracter=fgetc(arq))!= EOF){
+            arquivo[i]=caracter;
+            i++;
+            if(caracter=='$'){
+                quantTables++;
+            }
+
+        }
+    }
+
+    vetor = malloc(quantTables * sizeof(char));
+    int l=0;
+    for(i=0;i<strlen(arquivo);i++){
+        if(arquivo[i]=='$'){
+            p=1;
+            k=0;
+            char tabela_da_vez[21];
+            while(arquivo[i+p]!=':'){
+                tabela_da_vez[k] = arquivo[p+i];
+                p++;
+                k++;
+            }
+            tabela_da_vez[k]='\0';
+            strcpy(vetor[l],tabela_da_vez);
+            l++;
+
+        }
+
+    }
+
+    fclose(arq);
 
 }
-void deleteTable(){
 
-}
-void showTable(){
-
-}
 void criarDiretorios(){
     FILE *arc = fopen("meta.txt","w");
     fclose(arc);
 }
 
+void consultarTable (){
+
+char nome_tabela[30];
+char chave_p[30];
+printf("Qual tabela deseja realizar a pesquisa?");
+fgets(nome_tabela, 30, stdin);
+fgets(chave_p, 30, stdin);
+FILE *arq = fopen ("meta.txt", "r");
+
+if(fscanf(arq,"$%s:%s;/n", &nome_tabela, &chave_p) != NULL){
+
+
+        }
+    }
+
+
+}
+
+
 int main()
 {
-
     tituloEidioma();
-    criarDiretorios();
     menu();
+
+
 
     return 0;
 }
