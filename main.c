@@ -27,7 +27,7 @@ void menu(){
         printf(" *         SGBD-ITP            *\n");
         printf("*******************************\n");
         printf("\n");
-        printf("Escolha uma opÁ„o:\n");
+        printf("Escolha uma op√ß√£o:\n");
         printf("(1)Criar um tabela\n");
         printf("(2)Listar todas as tabelas\n");
         printf("(3)Criar uma nova linha na tabela\n");
@@ -53,7 +53,7 @@ void menu(){
             case 0:
                 n=0;
            */ default:
-                printf("OpÁ„o inv·lida\n");
+                printf("Op√ß√£o inv√°lida\n");
         }
 
 
@@ -139,7 +139,7 @@ void novaTable(){
             tipo [1]= '\0';
             break;
         default:
-            printf("opÁ„o invalida");
+            printf("op√ß√£o invalida");
             Sleep(1);
             system("cls");
         }
@@ -222,19 +222,26 @@ void criarDiretorios(){
 }
 
 void consultarTable (){
-
+int i;
 char nome_tabela[30];
-char chave_p[30];
-printf("Qual tabela deseja realizar a pesquisa?");
+printf("Em Qual tabela deseja realizar a pesquisa?");
 fgets(nome_tabela, 30, stdin);
-fgets(chave_p, 30, stdin);
 FILE *arq = fopen ("meta.txt", "r");
+system("cls");
 
-if(fscanf(arq,"$%s:%s;/n", &nome_tabela, &chave_p) != NULL){
-
+if(arq == NULL)
+   printf("Erro, nao foi possivel abrir o arquivo\n");
+   menu();
+else
+while(sscanf(arq,"%s",&nome_tabela)!=EOF){
+        strcmp(,)
+        
+        
+        
+}
 
         }
-    }
+    
 
 
 }
